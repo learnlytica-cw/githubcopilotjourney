@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Copilot Enterprise Training Program</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0366d6;
+            --secondary-color: #586069;
+            --accent-blue: #2188ff;
+            --background-color: #ffffff;
+            --card-background: #f6f8fa;
+            --text-primary: #24292e;
+            --text-secondary: #586069;
+            --border-color: #e1e4e8;
+            --hover-color: #f1f8ff;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background-color);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-blue) 100%);
+            color: white;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" fill="none"/><circle cx="3" cy="3" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .stats-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .stats-card h3 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+        
+        .stats-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        .stats-card i {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+        
+        .module-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .module-card:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .case-study-badge {
+            background-color: var(--card-background);
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            margin: 0.25rem;
+            display: inline-block;
+            border: 1px solid var(--border-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .case-study-badge:hover {
+            background-color: var(--hover-color);
+            border-color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .highlight-box {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .highlight-box h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        
+        .highlight-box ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0;
+            list-style-type: none;
+        }
+        
+        .highlight-box ul li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+        
+        .highlight-box ul li::before {
+            content: '→';
+            position: absolute;
+            left: -1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .section-title {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+        }
+        
+        .module-card h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .module-card h5 {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .module-card ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0;
+            color: var(--text-secondary);
+        }
+        
+        .github-icon {
+            color: white;
+            font-size: 2rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: white;
+            opacity: 0.9;
+        }
+        
+        /* Custom Button Style */
+        .btn-custom {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            background-color: var(--hover-color);
+            border-color: var(--primary-color);
+        }
+        
+        /* Scroll Bar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 4rem 0;
+            }
+            
+            .stats-card {
+                margin-bottom: 1rem;
+            }
+        
+            .hero-section h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1><i class="fab fa-github github-icon"></i> GitHub Copilot Enterprise Training</h1>
+            <p class="lead mb-5">Master AI-Assisted Development with Industry Best Practices</p>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-cubes mb-3"></i>
+                        <h3>8</h3>
+                        <p>Core Modules</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-flask mb-3"></i>
+                        <h3>12+</h3>
+                        <p>Case Studies</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-code mb-3"></i>
+                        <h3>20+</h3>
+                        <p>Hands-on Labs</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-calendar-check mb-3"></i>
+                        <h3>3</h3>
+                        <p>Day Program</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Program Overview -->
+        <section class="mb-5">
+            <h2 class="section-title">Program Overview</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-chart-line me-2"></i>Business Value</h4>
+                        <ul>
+                            <li>40% reduction in development time</li>
+                            <li>60% decrease in boilerplate code</li>
+                            <li>Improved code quality and consistency</li>
+                            <li>Enhanced developer productivity</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-graduation-cap me-2"></i>Delivery Format</h4>
+                        <ul>
+                            <li>Interactive sessions</li>
+                            <li>Real-world case studies</li>
+                            <li>Hands-on exercises</li>
+                            <li>Best practice sharing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module Listing -->
+        <!-- Module Listing -->
+        <section>
+            <h2 class="mb-4">Training Modules</h2>
+
+            <!-- Module 1 -->
+            <div class="card module-card">
+                <div class="card-body">
+                    <h3>Module 1: Introduction to GitHub Copilot</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Key Topics</h5>
+                            <ul>
+                                <li>Overview of AI-assisted development</li>
+                                <li>Understanding Generative AI principles</li>
+                                <li>Core capabilities and features</li>
+                                <li>Integration with development workflow</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Case Studies</h5>
+                            <div class="case-study-badge">E-commerce API Development</div>
+                            <div class="case-study-badge">Data Processing Pipeline</div>
+                            <div class="case-study-badge">Automated Testing Suite</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="card module-card">
+                <div class="card-body">
+                    <h3>Module 2: Setting Up GitHub Copilot</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Key Topics</h5>
+                            <ul>
+                                <li>Installation across different IDEs</li>
+                                <li>Configuration best practices</li>
+                                <li>Environment setup optimization</li>
+                                <li>Integration verification</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Case Studies</h5>
+                            <div class="case-study-badge">Enterprise IDE Setup</div>
+                            <div class="case-study-badge">Team Configuration Management</div>
+                            <div class="case-study-badge">CI/CD Integration</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="card module-card">
+                <div class="card-body">
+                    <h3>Module 3: Basic Usage & Prompt Engineering</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Key Topics</h5>
+                            <ul>
+                                <li>Effective code suggestion management</li>
+                                <li>Writing effective prompts</li>
+                                <li>Context optimization</li>
+                                <li>Pattern recognition techniques</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Case Studies</h5>
+                            <div class="case-study-badge">Authentication System</div>
+                            <div class="case-study-badge">Real-time Dashboard</div>
+                            <div class="case-study-badge">API Documentation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="card module-card">
+                <div class="card-body">
+                    <h3>Module 4: Understanding Generative AI and LLMs</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Key Topics</h5>
+                            <ul>
+                                <li>LLM architecture fundamentals</li>
+                                <li>Code generation principles</li>
+                                <li>Model capabilities and limitations</li>
+                                <li>Performance optimization</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Case Studies</h5>
+                            <div class="case-study-badge">Code Refactoring System</div>
+                            <div class="case-study-badge">Smart Code Analysis</div>
+                            <div class="case-study-badge">Pattern Detection</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="card module-card">
+                <div class="card-body">
+                    <h3>Module 5: Advanced Prompt Engineering</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Key Topics</h5>
+                            <ul>
+                                <li>Complex prompt structures</li>
+                                <li>Context manipulation</li>
+                                <li>Output optimization</li>
+                                <li>Error handling patterns</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Case Studies</h5>
+                            <div class="case-study-badge">Enterprise API Design</div>
+                            <div class="case-study-badge">Microservices Architecture</div>
+                            <div class="case-study-badge">Security Implementation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="card module-card">
+                <div class="card-body">
+                    <h3>Module 6: Language & Framework Optimization</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Key Topics</h5>
+                            <ul>
+                                <li>Language-specific features</li>
+                                <li>Framework integration</li>
+                                <li>Best practices by ecosystem</li>
+                                <li>Performance optimization</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Case Studies</h5>
+                            <div class="case-study-badge">Full-Stack Development</div>
+                            <div class="case-study-badge">Cloud Integration</div>
+                            <div class="case-study-badge">Mobile Development</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 7 -->
+            <div class="card module-card">
+                <div class="card-body">
+                    <h3>Module 7: Best Practices & Ethics</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Key Topics</h5>
+                            <ul>
+                                <li>Code quality standards</li>
+                                <li>Security considerations</li>
+                                <li>Ethical AI usage</li>
+                                <li>Compliance guidelines</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Case Studies</h5>
+                            <div class="case-study-badge">Code Review Automation</div>
+                            <div class="case-study-badge">Security Compliance</div>
+                            <div class="case-study-badge">Quality Assurance</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 8 -->
+            <div class="card module-card">
+                <div class="card-body">
+                    <h3>Module 8: Enterprise Integration & Scaling</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Key Topics</h5>
+                            <ul>
+                                <li>Enterprise-wide deployment</li>
+                                <li>Team collaboration patterns</li>
+                                <li>Scaling strategies</li>
+                                <li>Performance monitoring</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Case Studies</h5>
+                            <div class="case-study-badge">Enterprise Rollout</div>
+                            <div class="case-study-badge">Team Adoption</div>
+                            <div class="case-study-badge">Performance Metrics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+   
+</body>
+</html>

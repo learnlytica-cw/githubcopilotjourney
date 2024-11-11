@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering Video Review</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0366d6;
+            --secondary-color: #586069;
+            --accent-blue: #2188ff;
+            --background-color: #ffffff;
+            --card-background: #f6f8fa;
+            --text-primary: #24292e;
+            --text-secondary: #586069;
+            --border-color: #e1e4e8;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background-color);
+        }
+        
+        .hero-section {
+            background: linear-gradient(120deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .hero-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+    
+        .hero-circle-1, .hero-circle-2 {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(3, 102, 214, 0.1), rgba(33, 136, 255, 0.1));
+        }
+    
+        .hero-circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+        }
+    
+        .hero-circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -50px;
+        }
+    
+        .course-badge {
+            background: rgba(3, 102, 214, 0.1);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-block;
+        }
+    
+        .gradient-text {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+    
+        .course-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+    
+        .stat-item {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+    
+        .summary-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    
+        .progress-ring {
+            position: relative;
+            display: inline-block;
+        }
+    
+        .progress-ring-circle-bg {
+            fill: none;
+            stroke: #e9ecef;
+            stroke-width: 8;
+        }
+    
+        .progress-ring-circle {
+            fill: none;
+            stroke: var(--primary-color);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 339.292;
+            stroke-dashoffset: 0;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    
+        .progress-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+        }
+    
+        .progress-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+    
+        .total-duration {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+    
+        @media (max-width: 991.98px) {
+            .summary-card {
+                margin-top: 2rem;
+            }
+            
+            .hero-section {
+                padding: 3rem 0;
+            }
+        }
+        
+        .video-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-title {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-right: 2.5rem;
+        }
+        
+        .video-duration {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(3, 102, 214, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .btn-watch {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .btn-watch:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .section-title {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+        }
+        
+        .total-duration {
+            background: var(--card-background);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        p {
+            color: var(--text-secondary);
+        }
+        
+        .video-card p {
+            color: var(--text-secondary);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-white);
+            background-color: var(--primary-dark);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+       
+        .video-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-blue);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }    
+        .progress-bar {
+            height: 4px;
+            background: rgba(30, 144, 255, 0.1);
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-value {
+            width: 0%;
+            height: 100%;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        .total-duration {
+            background: var(--primary-blue);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .video-card {
+                padding: 1rem;
+            }
+            
+            .video-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container position-relative">
+            <!-- Background Decoration -->
+            <div class="hero-decoration">
+                <div class="hero-circle-1"></div>
+                <div class="hero-circle-2"></div>
+            </div>
+    
+            <!-- Content -->
+            <div class="hero-content">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="badge mb-3 course-badge">
+                            <i class="fas fa-graduation-cap me-2"></i>Enterprise Training
+                        </div>
+                        <h1 class="display-4 fw-bold mb-4">
+                            <i class="fas fa-video text-primary me-3"></i>
+                            GitHub Copilot & Prompt Engineering
+                            <span class="gradient-text">Master Class</span>
+                        </h1>
+                        <p class="lead mb-4">
+                            Master AI-powered development with comprehensive video series covering 
+                            Generative AI, Prompt Engineering, and GitHub Copilot implementation
+                        </p>
+                        <div class="course-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-clock me-2"></i>
+                                <span>2+ Hours</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-video me-2"></i>
+                                <span>19 Videos</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-certificate me-2"></i>
+                                <span>Certificate</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="summary-card">
+                            <div class="progress-ring">
+                                <svg width="120" height="120" viewBox="0 0 120 120">
+                                    <circle class="progress-ring-circle-bg" cx="60" cy="60" r="54"/>
+                                    <circle class="progress-ring-circle" cx="60" cy="60" r="54"/>
+                                </svg>
+                                <div class="progress-text">
+                                    <span class="progress-number">19</span>
+                                    <span class="progress-label">Lessons</span>
+                                </div>
+                            </div>
+                            <div class="total-duration mt-4">
+                                <h5 class="text-center mb-0">
+                                    <i class="fas fa-clock me-2"></i>
+                                    Total Duration: 2h 7m
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Listing -->
+    <div class="container my-5">
+        <!-- Video 1 -->
+        <div class="video-card">
+            <div class="video-number">1</div>
+            <h3 class="video-title">Generative AI and LLMS</h3>
+            <div class="video-duration">
+                <i class="fas fa-clock"></i>
+                18:23
+            </div>
+            <p class="mb-3">Introduction to Generative AI and Large Language Models</p>
+            <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=3fd1bc67-2822-44a1-a2b6-9b256d2ad3ef" 
+               class="btn-watch" target="_blank">
+                <i class="fas fa-play-circle"></i>
+                Watch Video
+            </a>
+            <div class="progress-bar">
+                <div class="progress-value" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="video-card">
+            <div class="video-number">2</div>
+            <h3 class="video-title">How LLM Works</h3>
+            <div class="video-duration">
+                <i class="fas fa-clock"></i>
+                11:40
+            </div>
+            <p class="mb-3">Understanding the mechanics of Large Language Models</p>
+            <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=0ed38737-f33e-4947-9473-8d1f11b716e5" 
+               class="btn-watch" target="_blank">
+                <i class="fas fa-play-circle"></i>
+                Watch Video
+            </a>
+            <div class="progress-bar">
+                <div class="progress-value" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Additional videos following the same pattern -->
+        <!-- Video 3 -->
+        <div class="video-card">
+            <div class="video-number">3</div>
+            <h3 class="video-title">Prompt Engineering</h3>
+            <div class="video-duration">
+                <i class="fas fa-clock"></i>
+                12:08
+            </div>
+            <p class="mb-3">Introduction to Prompt Engineering concepts and methodologies</p>
+            <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=dfedad41-86fd-4ace-82f9-abd3423ef0f9" 
+               class="btn-watch" target="_blank">
+                <i class="fas fa-play-circle"></i>
+                Watch Video
+            </a>
+            <div class="progress-bar">
+                <div class="progress-value" style="width: 0%"></div>
+            </div>
+        </div>
+<!-- Video Listing -->
+<div class="container my-5">
+    <!-- Video 1 -->
+    <div class="video-card">
+        <div class="video-number">1</div>
+        <h3 class="video-title">Generative AI and LLMS</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            18:23
+        </div>
+        <p class="mb-3">Introduction to Generative AI and Large Language Models</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=3fd1bc67-2822-44a1-a2b6-9b256d2ad3ef" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="video-card">
+        <div class="video-number">2</div>
+        <h3 class="video-title">How LLM Works</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            11:40
+        </div>
+        <p class="mb-3">Understanding the mechanics of Large Language Models</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=0ed38737-f33e-4947-9473-8d1f11b716e5" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="video-card">
+        <div class="video-number">3</div>
+        <h3 class="video-title">Prompt Engineering</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            12:08
+        </div>
+        <p class="mb-3">Fundamentals of Prompt Engineering and its applications</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=dfedad41-86fd-4ace-82f9-abd3423ef0f9" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 4 -->
+    <div class="video-card">
+        <div class="video-number">4</div>
+        <h3 class="video-title">Prompt Types</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            10:26
+        </div>
+        <p class="mb-3">Different types of prompts and their use cases</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=60e095d8-9857-46eb-8c79-a3cf1c60e25d" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 5 -->
+    <div class="video-card">
+        <div class="video-number">5</div>
+        <h3 class="video-title">Prompt Structure</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            10:20
+        </div>
+        <p class="mb-3">How to structure prompts for optimal results</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=871d416e-eedc-4b4a-9976-53348d0aeb1f" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 6 -->
+    <div class="video-card">
+        <div class="video-number">6</div>
+        <h3 class="video-title">Prompt Optimization</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            06:31
+        </div>
+        <p class="mb-3">Techniques for optimizing prompt performance</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=3905eede-6ad4-4153-97a6-04ecc35c0e43" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 7 -->
+    <div class="video-card">
+        <div class="video-number">7</div>
+        <h3 class="video-title">Ethics in Prompt Engineering</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            06:51
+        </div>
+        <p class="mb-3">Ethical considerations in prompt engineering</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=aaf2eb85-3f29-499b-8a00-0aec723f5b8c" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 8 -->
+    <div class="video-card">
+        <div class="video-number">8</div>
+        <h3 class="video-title">Prompt Engineering Library</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            09:55
+        </div>
+        <p class="mb-3">Building and maintaining a prompt engineering library</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=1e94d809-2525-4ee6-a650-9663e61945f0" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+       <!-- Divider -->
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="section-title">GitHub Copilot Implementation Series</h2>
+            <p class="text-white-50 mb-4">Practical implementation and hands-on tutorials</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Additional Videos -->
+<div class="container my-5">
+    <!-- Video 1 -->
+    <div class="video-card">
+        <div class="video-number">1</div>
+        <h3 class="video-title">Introduction - GitHub CoPilot</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            10:25
+        </div>
+        <p class="mb-3">Comprehensive introduction to GitHub Copilot and its capabilities</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=85fc63a3-d370-45ef-90aa-891b89df441b" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="video-card">
+        <div class="video-number">2</div>
+        <h3 class="video-title">Start Working with CoPilot</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            03:59
+        </div>
+        <p class="mb-3">Quick start guide to begin working with GitHub Copilot</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=8134ea1e-65a1-4269-8f8f-27e5bcc3e733" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="video-card">
+        <div class="video-number">3</div>
+        <h3 class="video-title">Using GitHub Copilot</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            06:49
+        </div>
+        <p class="mb-3">Practical guide to utilizing GitHub Copilot effectively</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=2854f5d7-18d3-4dee-a719-828fa6801734" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 4 -->
+    <div class="video-card">
+        <div class="video-number">4</div>
+        <h3 class="video-title">Fundamentals of Prompt Engineering</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            07:18
+        </div>
+        <p class="mb-3">Core concepts of prompt engineering in GitHub Copilot</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=9be685c4-011d-4951-a009-029107740ff2" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 5 -->
+    <div class="video-card">
+        <div class="video-number">5</div>
+        <h3 class="video-title">GitHub Copilot Prompting Mechanism</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            05:47
+        </div>
+        <p class="mb-3">Understanding how the prompting mechanism works in Copilot</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=6e4cfb25-9830-4264-a592-c544a0ffc4a9" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 6 -->
+    <div class="video-card">
+        <div class="video-number">6</div>
+        <h3 class="video-title">Copilot Fundamentals</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            16:33
+        </div>
+        <p class="mb-3">Deep dive into the fundamental aspects of GitHub Copilot</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=ad31004e-5dd4-4ea3-a682-b0262cdde0cc" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 7 -->
+    <div class="video-card">
+        <div class="video-number">7</div>
+        <h3 class="video-title">Working with Copilot Chat</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            07:26
+        </div>
+        <p class="mb-3">Interactive tutorial on using Copilot's chat functionality</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=2e19b3ab-6307-41e9-991e-5b791a482821" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 8 -->
+    <div class="video-card">
+        <div class="video-number">8</div>
+        <h3 class="video-title">LLM and GitHub Copilot</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            11:17
+        </div>
+        <p class="mb-3">Understanding the relationship between LLMs and GitHub Copilot</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=224beb79-beca-4b3e-a295-ff45cb370e21" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 9 -->
+    <div class="video-card">
+        <div class="video-number">9</div>
+        <h3 class="video-title">Mastering Basic Completions</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            06:02
+        </div>
+        <p class="mb-3">Learn to master basic code completions in GitHub Copilot</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=0b755133-27e6-4fea-8fba-7befe68c3305" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 10 -->
+    <div class="video-card">
+        <div class="video-number">10</div>
+        <h3 class="video-title">Advanced Completions and Navigating Large Codebases</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            06:25
+        </div>
+        <p class="mb-3">Advanced techniques for handling completions in large projects</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=ef8ce762-5030-40a3-a566-dabf905d13bc" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Video 11 -->
+    <div class="video-card">
+        <div class="video-number">11</div>
+        <h3 class="video-title">Diving Deeper into Different Programming Languages</h3>
+        <div class="video-duration">
+            <i class="fas fa-clock"></i>
+            05:35
+        </div>
+        <p class="mb-3">Language-specific features and optimizations in GitHub Copilot</p>
+        <a href="https://app.cloud.scorm.com/sc/InvitationConfirmEmail?publicInvitationId=2ee9d82d-ed0b-4317-ba75-a6781c6de2b9" 
+           class="btn-watch" target="_blank">
+            <i class="fas fa-play-circle"></i>
+            Watch Video
+        </a>
+        <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
